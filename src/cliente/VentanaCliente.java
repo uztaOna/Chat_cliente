@@ -1,24 +1,26 @@
 package cliente;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.net.Socket;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.JTextArea;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import javax.swing.JTextField;
 
 public class VentanaCliente extends JFrame{
 
 	private static final long serialVersionUID = -7142412255417186125L;
-
-	public JTextField nick;
-	private JTextField textField;
-	private JTextArea textArea;
-	private final JButton btnEnviar,btnSalir;
-	private JPanel panel;
+	private String nick;
+	public JTextField textField;
+	public JTextArea textArea;
+	public final JButton btnAceptar,btnSalir;
+	public JPanel panel;
 	
-	public VentanaCliente() {
+	public VentanaCliente(Socket socket,String nick) {
+		this.nick=nick;
+		
 		setTitle("Chat");
 		setResizable(false);
 		setBounds(100, 100, 450, 350);
@@ -41,20 +43,18 @@ public class VentanaCliente extends JFrame{
 		btnSalir.setBounds(170, 240, 100, 20);
 		getContentPane().add(btnSalir);
 		
-		btnEnviar = new JButton("Enviar");
-		btnEnviar.setBounds(320, 11, 100, 20);
-		getContentPane().add(btnEnviar);
+		btnAceptar = new JButton("Enviar");
+		btnAceptar.setBounds(320, 11, 100, 20);
+		getContentPane().add(btnAceptar);
 		initListeners();
-		
 	}
 	
 	private void initListeners() {
 		btnSalir.addActionListener(new ListenerBotones());
-		btnEnviar.addActionListener(new ListenerBotones());
+		btnAceptar.addActionListener(new ListenerBotones());
 	}
 
 	private class ListenerBotones implements ActionListener {
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			String accion = e.getActionCommand();
@@ -69,6 +69,6 @@ public class VentanaCliente extends JFrame{
 	}
 	
 	public static void main(String[] args) {
-		new VentanaCliente().setVisible(true);
+		new VentanaCliente(null, "").setVisible(true);
 	}
 }
