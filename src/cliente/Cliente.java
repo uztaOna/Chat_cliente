@@ -8,6 +8,8 @@ import javax.swing.JButton;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import com.sun.jdi.event.Event;
+
 public class Cliente {
 
 	static final String HOST= "localhost";
@@ -18,6 +20,10 @@ public class Cliente {
 		Socket cliente=null;
 		ObjectInputStream entrada=null;
 		ObjectOutputStream salida=null;
+		
+		HiloRecibir hiloCliente = new HiloRecibir(entrada, textArea, texto);
+		hiloCliente.start();
+		
 	}
 	
 	public static String getHost() {
@@ -28,11 +34,7 @@ public class Cliente {
 		return PUERTO;
 	}
 	
-	protected void enviarMensaje(String mensaje) {
+	public void enviarMensaje(String mensaje) {
 		
-	}
-	
-	public static void main(String[] args) {
-		Cliente c1=new Cliente();
 	}
 }

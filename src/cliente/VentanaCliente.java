@@ -2,6 +2,7 @@ package cliente;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.net.Socket;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -15,12 +16,13 @@ public class VentanaCliente extends JFrame{
 	private String nick;
 	public JTextField textField;
 	public JTextArea textArea;
-	public final JButton btnAceptar,btnSalir;
+	public final JButton btnEnviar,btnSalir;
 	public JPanel panel;
 	
-	public VentanaCliente(Socket socket,String nick) {
+	public VentanaCliente(Socket socket,String nick) throws IOException {
 		this.nick=nick;
 		
+		// Elementos de la ventana
 		setTitle("Chat");
 		setResizable(false);
 		setBounds(100, 100, 450, 350);
@@ -43,15 +45,21 @@ public class VentanaCliente extends JFrame{
 		btnSalir.setBounds(170, 240, 100, 20);
 		getContentPane().add(btnSalir);
 		
-		btnAceptar = new JButton("Enviar");
-		btnAceptar.setBounds(320, 11, 100, 20);
-		getContentPane().add(btnAceptar);
+		btnEnviar = new JButton("Enviar");
+		btnEnviar.setBounds(320, 11, 100, 20);
+		getContentPane().add(btnEnviar);
+		
+		// Acciones de los botones
 		initListeners();
+		
+		// Crear el socket para conectarse con el servidor
+		socket = new Socket();
+		new Cliente();
 	}
 	
 	private void initListeners() {
 		btnSalir.addActionListener(new ListenerBotones());
-		btnAceptar.addActionListener(new ListenerBotones());
+		btnEnviar.addActionListener(new ListenerBotones());
 	}
 
 	private class ListenerBotones implements ActionListener {
@@ -66,9 +74,5 @@ public class VentanaCliente extends JFrame{
 				break;
 			}
 		}
-	}
-	
-	public static void main(String[] args) {
-		new VentanaCliente(null, "").setVisible(true);
 	}
 }

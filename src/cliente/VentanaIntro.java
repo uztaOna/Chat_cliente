@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 
@@ -53,11 +54,15 @@ public class VentanaIntro extends JFrame{
 		public void actionPerformed(ActionEvent e) {
 			String accion = e.getActionCommand();
 			switch (accion) {
-			case "Enviar":
+			case "Aceptar":
 				if(nick.getText() == "")
 					JOptionPane.showMessageDialog(null, "¡Atención! Introduzca un nombre de usuario válido");
 				else
-					new VentanaCliente(null, nick.toString()).setVisible(true);
+					try {
+						new VentanaCliente(null, nick.toString()).setVisible(true);
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
 				break;
 			case "Salir":
 				System.exit(getDefaultCloseOperation());
